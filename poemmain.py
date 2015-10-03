@@ -37,7 +37,7 @@ def main():
             if optional_pick<=5 and optional_pick>=1:
                 optional_func[optional_pick]()
         except:
-            print("{} is not a valid input.")
+            print("{} is not a valid input.".format(optional_pick))
 
 
 

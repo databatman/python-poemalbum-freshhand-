@@ -68,8 +68,8 @@ class album(object):
         print("Album:%s\nnums:%s\n"%(self.title,self.nums))
         i=1
         for album_poem in self.poems:
-            album_poem=str(i)+album_poem
-            print(album_poem)
+            album_poem1=str(i)+album_poem
+            print(album_poem1)
             i=i+1
 
 
@@ -106,7 +106,8 @@ def serial_album(obi):
  #将诗歌集json初始化成诗歌集对象
 def unserial_album(openalbum):
     def dict_album(p):
-        return album(p['title'],p['labels'],p['nums'],p['poems'])
+        return album(p['title'],p['labels'],p['poems'])
+
     os.chdir(os.path.join(os.path.abspath('.'),'albums'))   #打开albums目录
     f=open(openalbum,'r')
     b=json.load(f,object_hook=dict_album)
@@ -131,18 +132,18 @@ def write_poem():
     while True:
         write_title=input("请输入诗的名字:")
         write_poet=input("请输入诗人:")
-        print("*"*40)
+        print("*"*50)
         print("请输入诗的内容：.")
         print("PS:注意请在每行诗的末尾加上‘+’后再继续输入下一句诗。:")
         print("ex:鹅,鹅,鹅，+曲项向天歌。+白毛浮绿水，+红掌拨清波。")
         write_text=input()
-        write_dynasty=input("请输入诗的朝代[ex:古代,唐宋,元明清,近代]:")
+        write_dynasty=input("请输入诗的朝代序号[ex:1.古代,2.唐宋,3.元明清,4.近代]:")
         while True:           
-                if write_dynasty in [u"古代",u"唐宋",u"元明清",u"近代"]:
+                if write_dynasty in ["1","2","3","4"]:
                     break
                 else:
-                    print("{} is not a valid input.".format(value))
-                    write_dynasty=input("请输入正确的朝代[ex:古代,唐宋,元明清,近代]")
+                    print("{} is not a valid input.".format(write_dynasty))
+                    write_dynasty=input("请输入正确的朝代序号[ex:1.古代,2.唐宋,3.元明清,4.近代]:")
 
         writed_poem=poem(write_title,write_poet,write_text,write_dynasty)
         checkyn=input("Do you want to check your poem just writed?[y/n]:")
@@ -150,10 +151,12 @@ def write_poem():
             print("The poem below is your poem:")
             time.sleep(1)
             writed_poem.print_poem()
-            qwrite=input("Do you want to make some change?[y/n]:")     
+            qwrite=input("Do you want to make some change?[y/n]:")    
             if qwrite=='n':
                 serial_poem(writed_poem)              
-                break                                            
+                break                     
+        if checkyn!='y':
+            break                       
         serial_poem(writed_poem)            #保存书写的诗歌
 
 #浏览所有的诗歌
@@ -180,7 +183,6 @@ def scan_poem():
             intj=int(j)
             if intj>=0 and intj<=len(scan_poemslist):
                 pick_poem=scan_poemslist[intj-1]
-                
                 picked_poem=unserial_poem(pick_poem)                  #反系列化过程
                 picked_poem.print_poem()                              #在桌面打印诗歌
                 print("\n\n")
@@ -201,8 +203,44 @@ def rand_poem():
         random_picked=unserial_poem(poemslist[i])
         random_picked.print_poem()
 
-        qcontinue=input("press any key to continue[q to exit]:")
+        qcontinue=input("press any key to continue random[q to exit]:")
         if qcontinue=='q':
+            break
+
+
+
+
+#创建诗歌集
+def create_album():
+
+    while True:
+        a=1
+        input_poems=[]
+        write_title=input("请输入诗集的名字:")
+        write_label=input("请输入诗集的标签[only one]:")
+        print('\n')
+        print('*'*50,"")
+        print("请输入想添加的诗名:")
+        print('目录：',os.listdir(os.path.join(os.path.abspath('.'),'poems')))
+        print("PS:注意名字必须同上面的目录一样，.json也要输入")
+
+        while True:                #诗歌名字输入
+            input_poem=input("请输入第{}首诗歌名字[q to exit]:".format(a))
+            input_poem1=input_poem.strip()
+            if input_poem1 in os.listdir(os.path.join(os.path.abspath('.'),'poems')):
+                a=a+1
+                input_poems.append(input_poem1)
+            elif input_poem1=='q':
+                break
+            else:
+                print ("%s is not a valid input."% input_poem)
+              
+        created_album=album(write_title,write_label,input_poems)
+        serial_album(created_album)
+
+        print('*'*50,"\nCongratulation!You just create an album!Now you can see it in '已有诗歌集'.")
+        qcontinue=input("Press q to exit:")
+        if qcontinue:
             break
 
 
@@ -214,64 +252,36 @@ def scan_album():
         scan_albumslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
         os.chdir('..')
+        print("诗歌集：")
         for albumslist in scan_albumslist:
             i+=1
             _albumslist=str(i)+'.'+albumslist       #在窗口打印所有的诗歌名单
             print(_albumslist)
-            print('q to exit.')
-        
+        print('\n')
         j=input("Which one do you want to see?[q to exit]:")     #查看指定的诗歌
         if j=='q':
             break
         try:
             intj=int(j)
-            if j>=0 and j<=len(scan_albumslist):
-                pick_album=scan_albumslist[j-1]            
+            if intj>=0 and intj<=len(scan_albumslist):
+                pick_album=scan_albumslist[intj-1]          
                 picked_album=unserial_album(pick_album)                  #反系列化过程
-                                       
+                print('\n')               
                 while True:
+                    print('*'*50) 
+                    time.sleep(0.5)
                     picked_album.print_albums()                       #在桌面打印诗歌
+                    print('\n')
                     k=input("pick one to read[q to exit]:")
                     if k=='q':
                         break
                     try:
                         intk=int(k)
-                        pick_album_poem=picked_album.poems[k-1]
+                        pick_album_poem=picked_album.poems[intk-1]
                         picked_album_poem=unserial_poem(pick_album_poem)   #打开指定诗歌
                         picked_album_poem.print_poem()
                     except:
                         print("%s is not a valid input."% k)
         except:
             print("{} is not a valid input.".format(j))
-
-
-#创建诗歌集
-def create_album():
-
-    while True:
-
-        write_title=input("请输入诗集的名字:")
-        write_label=input("请输入诗集的标签[only one]:")
-        print("请输入想添加的诗名:")
-        print(os.listdir(os.path.join(os.path.abspath('.'),'poems')))
-        print("PS:注意名字必须同上面的目录一样，'.json'也要输入")
-        a=1
-        while True:                #诗歌名字输入
-            input_poem=input("请输入 第{}首 诗歌名字[q to exit]:".format(a))
-            input_poem=input_poem.strip()
-            if input_poem in os.listdir(os.path.join(os.path.abspath('.'),'poems')):
-                a=a+1
-                input_poems.append(input_poem)
-            elif input_poem=='q':
-                break
-            else:
-                print ("%s is not a valid input."% input_poem)
-              
-        created_album=album(write_title,write_label,input_poems)
-        serial_album(created_album)
-
-        print("Congratulation!You just create an album!Now you can see it in '已有诗歌集'.")
-        qcontinue=input("Press q to exit:")
-        if qcontinue:
-            break
 
