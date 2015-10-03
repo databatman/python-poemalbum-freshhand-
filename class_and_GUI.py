@@ -161,8 +161,9 @@ def write_poem():
                 serial_poem(writed_poem)              
                 break                     
         if checkyn!='y':
+            serial_poem(writed_poem)            #保存书写的诗歌
             break                       
-        serial_poem(writed_poem)            #保存书写的诗歌
+        
 
 #浏览所有的诗歌
 def scan_poem():

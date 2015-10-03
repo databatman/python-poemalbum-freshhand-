@@ -22,6 +22,8 @@ def main():
         os.mkdir('poems')
     if file2 not in os.listdir('.'):
         os.mkdir('albums')
+#这段程序的目的是为了生成可执行文件时，可以不报错，但是最后发现exe模式下这段代码没生效
+#还是要手动创建两个文件夹，这个原因怎么解决？
 
 
     P1=poem('断章','卞之琳','你站在桥上看风景，+看风景人在楼上看你。\
