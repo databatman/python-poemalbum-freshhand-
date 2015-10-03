@@ -161,15 +161,19 @@ def scan_poem():
         print(_poemslist)
     while True:
         j=input("Which one do you want to see?[q to exit]:")     #查看指定的诗歌
-        if isinstance(j,int) and j>=0 and j<=len(scan_poemslist):
-            pick_poem='poems\\'+scan_poemslist[j-1]
-            
-            picked_poem=unserial_poem(pick_poem)                  #反系列化过程
-            picked_poem.print_poem()                              #在桌面打印诗歌
-            
-
         if j=='q':
-            pass
+            break
+        try:
+            intj=int(j)
+            if intj>=0 and intj<=len(scan_poemslist):
+                pick_poem='poems\\'+scan_poemslist[intj-1]
+            
+                picked_poem=unserial_poem(pick_poem)                  #反系列化过程
+                picked_poem.print_poem()                              #在桌面打印诗歌
+        except:
+            print("{} is not a valid input.".format(j))
+
+        
 
 
 #随机诗歌
@@ -183,7 +187,7 @@ def rand_poem():
 
         qcontinue=input("press any key to continue[q to exit]:")
         if qcontinue=='q':
-            pass
+            break
 
 
 #已有诗歌集
@@ -199,24 +203,30 @@ def scan_album():
             print('q to exit.')
         
         j=input("Which one do you want to see?[q to exit]:")     #查看指定的诗歌
-        if isinstance(j,int) and j>=0 and j<=len(scan_albumslist):
-            pick_album=scan_albumslist[j-1]            
-            picked_album=unserial_album(pick_album)                  #反系列化过程
-                                       
-            while True:
-                picked_album.print_albums()                       #在桌面打印诗歌
-                k=input("pick one to read[q to exit]:")
-                if isinstance(k,int):
-                    pick_album_poem=picked_album.poems[k-1]
-                    picked_album_poem=unserial_poem(pick_album_poem)   #打开指定诗歌
-                    picked_album_poem.print_poem()
-                elif k=='q':
-                    break
-                else:
-                    print("{} is not a valid input.")
-
         if j=='q':
             break
+        try:
+            intj=int(j)
+            if j>=0 and j<=len(scan_albumslist):
+                pick_album=scan_albumslist[j-1]            
+                picked_album=unserial_album(pick_album)                  #反系列化过程
+                                       
+                while True:
+                    picked_album.print_albums()                       #在桌面打印诗歌
+                    k=input("pick one to read[q to exit]:")
+                    if k=='q':
+                        break
+                    try:
+                        intk=int(k)
+                        pick_album_poem=picked_album.poems[k-1]
+                        picked_album_poem=unserial_poem(pick_album_poem)   #打开指定诗歌
+                        picked_album_poem.print_poem()
+                    except:
+                        print("%s is not a valid input."% k)
+        except:
+            print("{} is not a valid input.".format(j))
+
+        
 
 
 
@@ -234,7 +244,7 @@ def create_album():
         while True:                #诗歌名字输入
             input_poem=input("plaese enter 第{}首 name[q to exit]:".format(a))
             input_poem=input_poem.strip()
-            if input_poem in os.listdir(os.path.join(os.path.abspath('.'),'poems'):
+            if input_poem in os.listdir(os.path.join(os.path.abspath('.'),'poems')):
                 a=a+1
                 input_poems.append(input_poem)
             elif input_poem=='q':

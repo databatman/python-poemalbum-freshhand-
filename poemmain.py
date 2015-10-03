@@ -4,10 +4,10 @@
 
 __author__="Kairong Zhou"
 
-from class_of_poem_album import poem,album
-import class_of_poem_album as pa
+from class_and_GUI import poem,album
+import class_and_GUI as pa
 import os
-from class_of_poem_album import write_poem,scan_poem,create_album,scan_album,rand_poem
+from class_and_GUI import write_poem,scan_poem,create_album,scan_album,rand_poem
     
 
 def main():
@@ -32,9 +32,11 @@ def main():
         optional_pick=input()
         if optional_pick=='q':
             break
-        elif isinstance(optional_pick,int) and optional_pick<=5 and optional_pick>=1:
-            optional_func[optional_pick]()
-        else:
+        try:
+            optional_pick=int(optional_pick)
+            if optional_pick<=5 and optional_pick>=1:
+                optional_func[optional_pick]()
+        except:
             print("{} is not a valid input.")
 
 
