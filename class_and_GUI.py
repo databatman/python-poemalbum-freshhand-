@@ -127,8 +127,9 @@ def write_poem():
     while True:
         write_title=input("please enter poem's name:")
         write_poet=input("please enter poem's poet:")
+        print("*"*20)
         print("please enter poem's text.")
-        print("PS:注意请在每行诗的末尾加上\\n:")
+        print("PS:注意请在每行诗的末尾加上\\n后再继续输入下一句诗。:")
         write_text=input()
         write_dynasty=input("please enter poem's dynasty[ex:古代,唐宋,元明清,近代]:")
         while True:           
@@ -148,7 +149,8 @@ def write_poem():
             qwrite=input("Do you want to make some change?[y/n]:")     
             if qwrite=='n':
                 serial_poem(writed_poem)              
-                break                                             #之后要提供循环接口
+                break                                            
+        serial_poem(writed_poem)            #保存书写的诗歌
 
 #浏览所有的诗歌
 def scan_poem():
