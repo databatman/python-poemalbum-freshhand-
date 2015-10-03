@@ -25,7 +25,7 @@ def main():
     while True:
         print("\n1.写入诗歌")
         print("2.浏览所有的诗")
-        print("3.创建诗歌集)")
+        print("3.创建诗歌集")
         print("4.浏览已有诗歌集")
         print("5.选取一首随机的诗")
         print("press num to enter/q to exit.")

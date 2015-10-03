@@ -40,11 +40,15 @@ class poem(object):
                 value=input("please enter right dynasty\[ex:古代,唐宋,元明清,近代]")
 
     def print_poem(self):
-        print("title: %s\npoet: %s"%(self.title,self.poet))
-        poemlines=self.text.split('\n')
+        time.sleep(0.7)
+        print("名字: %s"%(self.title))
+        time.sleep(0.7)
+        print("诗人: %s\n" % self.poet)
+        time.sleep(0.7)
+        poemlines=self.text.split('+')
         for line1 in poemlines:
             print(line1)
-            time.sleep(0.9)
+            time.sleep(1.5)
 
 #定义诗歌集对象
 class album(object):           
@@ -129,8 +133,8 @@ def write_poem():
         write_poet=input("请输入诗人:")
         print("*"*40)
         print("请输入诗的内容：.")
-        print("PS:注意请在每行诗的末尾加上\\n后再继续输入下一句诗。:")
-        print("ex:鹅,鹅,鹅，\n曲项向天歌。\n白毛浮绿水，\n红掌拨清波。")
+        print("PS:注意请在每行诗的末尾加上‘+’后再继续输入下一句诗。:")
+        print("ex:鹅,鹅,鹅，+曲项向天歌。+白毛浮绿水，+红掌拨清波。")
         write_text=input()
         write_dynasty=input("请输入诗的朝代[ex:古代,唐宋,元明清,近代]:")
         while True:           
@@ -138,14 +142,13 @@ def write_poem():
                     break
                 else:
                     print("{} is not a valid input.".format(value))
-                    write_dynasty=input("请输入正确的朝代\[ex:古代,唐宋,元明清,近代]")
+                    write_dynasty=input("请输入正确的朝代[ex:古代,唐宋,元明清,近代]")
 
         writed_poem=poem(write_title,write_poet,write_text,write_dynasty)
         checkyn=input("Do you want to check your poem just writed?[y/n]:")
         if checkyn=='y':
             print("The poem below is your poem:")
-            time.sleep(0.5)
-            print(write_poem)
+            time.sleep(1)
             writed_poem.print_poem()
             qwrite=input("Do you want to make some change?[y/n]:")     
             if qwrite=='n':
@@ -155,28 +158,32 @@ def write_poem():
 
 #浏览所有的诗歌
 def scan_poem():
-    i=0
-
+    
     os.chdir(os.path.join(os.path.abspath('.'),'poems'))   #修改路径到poems
     scan_poemslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
-    print(scan_poemslist)
+    
     os.chdir('..')                                         #回到上级目录
-    for _poemslist in scan_poemslist:
-        i+=1
-        _poemlist=str(i)+'.'+_poemslist       #在窗口打印所有的诗歌名单
-        print(_poemslist)
+
     while True:
+        time.sleep(0.5)
+        i=0
+        for poemslist1 in scan_poemslist:
+            i+=1
+            _poemslist1=str(i)+'.'+poemslist1       #在窗口打印所有的诗歌名单
+            print(_poemslist1)
+    
         j=input("Which one do you want to see?[q to exit]:")     #查看指定的诗歌
         if j=='q':
             break
         try:
             intj=int(j)
             if intj>=0 and intj<=len(scan_poemslist):
-                pick_poem='poems\\'+scan_poemslist[intj-1]
-            
+                pick_poem=scan_poemslist[intj-1]
+                
                 picked_poem=unserial_poem(pick_poem)                  #反系列化过程
                 picked_poem.print_poem()                              #在桌面打印诗歌
+                print("\n\n")
         except:
             print("{} is not a valid input.".format(j))
 
@@ -207,9 +214,9 @@ def scan_album():
         scan_albumslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
         os.chdir('..')
-        for _albumslist in scan_albumslist:
+        for albumslist in scan_albumslist:
             i+=1
-            _albumslist=str(i)+'.'+_albumslist       #在窗口打印所有的诗歌名单
+            _albumslist=str(i)+'.'+albumslist       #在窗口打印所有的诗歌名单
             print(_albumslist)
             print('q to exit.')
         
@@ -236,9 +243,6 @@ def scan_album():
                         print("%s is not a valid input."% k)
         except:
             print("{} is not a valid input.".format(j))
-
-        
-
 
 
 #创建诗歌集
