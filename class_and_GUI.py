@@ -40,15 +40,20 @@ class poem(object):
                 value=input("please enter right dynasty\[ex:古代,唐宋,元明清,近代]")
 
     def print_poem(self):
-        time.sleep(0.7)
+        print('*'*50)
+        time.sleep(1)
         print("名字: %s"%(self.title))
-        time.sleep(0.7)
-        print("诗人: %s\n" % self.poet)
-        time.sleep(0.7)
+        time.sleep(1.5)
+        print("诗人: %s" % self.poet)
+        time.sleep(1.5)
+        print('\n')
+        time.sleep(1.5)
         poemlines=self.text.split('+')
         for line1 in poemlines:
             print(line1)
-            time.sleep(1.5)
+            time.sleep(2)
+        print('*'*50)
+        time.sleep(0.5)
 
 #定义诗歌集对象
 class album(object):           
