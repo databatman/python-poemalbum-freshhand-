@@ -125,19 +125,20 @@ def unserial_album(openalbum):
 #写入诗歌
 def write_poem():
     while True:
-        write_title=input("please enter poem's name:")
-        write_poet=input("please enter poem's poet:")
-        print("*"*20)
-        print("please enter poem's text.")
+        write_title=input("请输入诗的名字:")
+        write_poet=input("请输入诗人:")
+        print("*"*40)
+        print("请输入诗的内容：.")
         print("PS:注意请在每行诗的末尾加上\\n后再继续输入下一句诗。:")
+        print("ex:鹅,鹅,鹅，\n曲项向天歌。\n白毛浮绿水，\n红掌拨清波。")
         write_text=input()
-        write_dynasty=input("please enter poem's dynasty[ex:古代,唐宋,元明清,近代]:")
+        write_dynasty=input("请输入诗的朝代[ex:古代,唐宋,元明清,近代]:")
         while True:           
                 if write_dynasty in [u"古代",u"唐宋",u"元明清",u"近代"]:
                     break
                 else:
                     print("{} is not a valid input.".format(value))
-                    write_dynasty=input("please enter right dynasty\[ex:古代,唐宋,元明清,近代]")
+                    write_dynasty=input("请输入正确的朝代\[ex:古代,唐宋,元明清,近代]")
 
         writed_poem=poem(write_title,write_poet,write_text,write_dynasty)
         checkyn=input("Do you want to check your poem just writed?[y/n]:")
@@ -237,14 +238,14 @@ def create_album():
 
     while True:
 
-        write_title=input("please enter album's name:")
-        write_label=input("please enter album's label[only one]:")
-        print("please enter poem's name you want to add:")
+        write_title=input("请输入诗集的名字:")
+        write_label=input("请输入诗集的标签[only one]:")
+        print("请输入想添加的诗名:")
         print(os.listdir(os.path.join(os.path.abspath('.'),'poems')))
         print("PS:注意名字必须同上面的目录一样，'.json'也要输入")
         a=1
         while True:                #诗歌名字输入
-            input_poem=input("plaese enter 第{}首 name[q to exit]:".format(a))
+            input_poem=input("请输入 第{}首 诗歌名字[q to exit]:".format(a))
             input_poem=input_poem.strip()
             if input_poem in os.listdir(os.path.join(os.path.abspath('.'),'poems')):
                 a=a+1
