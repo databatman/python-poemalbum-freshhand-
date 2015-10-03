@@ -156,8 +156,12 @@ def write_poem():
 #浏览所有的诗歌
 def scan_poem():
     i=0
-    scan_poemslist=[x for x in os.listdir(os.path.join(os.path.abspath('.'),'poems'))\
+
+    os.chdir(os.path.join(os.path.abspath('.'),'poems'))   #修改路径到poems
+    scan_poemslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
+    print(scan_poemslist)
+    os.chdir('..')                                         #回到上级目录
     for _poemslist in scan_poemslist:
         i+=1
         _poemlist=str(i)+'.'+_poemslist       #在窗口打印所有的诗歌名单
@@ -182,8 +186,10 @@ def scan_poem():
 #随机诗歌
 def rand_poem():
     while True:
-        poemslist=[x for x in os.listdir(os.path.join(os.path.abspath('.'),'poems'))\
+        os.chdir(os.path.join(os.path.abspath('.'),'poems'))   #修改路径到poems
+        poemslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
+        os.chdir('..')                                         #回到上级目录
         i=randint(0,len(poemslist))
         random_picked=unserial_poem(poemslist[i])
         random_picked.print_poem()
@@ -197,8 +203,10 @@ def rand_poem():
 def scan_album():
     while True:
         i=0
-        scan_albumslist=[x for x in os.listdir(os.path.join(os.path.abspath('.'),'albums'))\
+        os.chdir(os.path.join(os.path.abspath('.'),'albums'))   #修改路径到albums
+        scan_albumslist=[x for x in os.listdir('.')\
                 if os.path.isfile(x) and os.path.splitext(x)[1]=='.json']
+        os.chdir('..')
         for _albumslist in scan_albumslist:
             i+=1
             _albumslist=str(i)+'.'+_albumslist       #在窗口打印所有的诗歌名单
